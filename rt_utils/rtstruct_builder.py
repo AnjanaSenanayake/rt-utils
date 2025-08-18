@@ -76,6 +76,10 @@ class RTStructBuilder:
         """
         Method to validate that the ReferencedSOPInstanceUID of a given contour image exists within the series data
         """
+        # ReferencedSOPInstanceUID is NOT available
+        msg = f"Loaded RTStruct references image(s) that are not contained in input series data. " \
+              f"Problematic image has SOP Instance Id: {contour_image.ReferencedSOPInstanceUID}"
+        
         for series in series_data:
             if contour_image.ReferencedSOPInstanceUID == series.SOPInstanceUID:
                 return
@@ -83,7 +87,4 @@ class RTStructBuilder:
                 warnings.warn(msg)
                 return
 
-        # ReferencedSOPInstanceUID is NOT available
-        msg = f"Loaded RTStruct references image(s) that are not contained in input series data. " \
-              f"Problematic image has SOP Instance Id: {contour_image.ReferencedSOPInstanceUID}"
         raise Exception(msg)
