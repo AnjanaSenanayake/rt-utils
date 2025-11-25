@@ -33,7 +33,7 @@ def load_dcm_images_from_path(dicom_series_path: str, force: bool) -> List[Datas
         for file in files:
             try:
                 ds = dcmread(os.path.join(root, file), force=force)
-                if hasattr(ds, "pixel_array"):
+                if hasattr(ds, "pixel_array") or force:
                     series_data.append(ds)
 
             except Exception:
