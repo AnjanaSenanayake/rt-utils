@@ -25,12 +25,12 @@ class RTStructBuilder:
         return RTStruct(series_data, ds)
 
     @staticmethod
-    def create_from(dicom_series_path: str, rt_struct_path: str, warn_only: bool = False) -> RTStruct:
+    def create_from(dicom_series_path: str, rt_struct_path: str, warn_only: bool = False, force = False) -> RTStruct:
         """
         Method to load an existing rt struct, given related DICOM series and existing rt struct
         """
 
-        series_data = image_helper.load_sorted_image_series(dicom_series_path)
+        series_data = image_helper.load_sorted_image_series(dicom_series_path, force=force)
         ds = dcmread(rt_struct_path)
         RTStructBuilder.validate_rtstruct(ds)
         RTStructBuilder.validate_rtstruct_series_references(ds, series_data, warn_only)
